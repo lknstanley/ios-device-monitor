@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Plguins.iOS.TrackingUsage
+namespace Plugins.iOS.TrackingUsage
 {
     [ Serializable ]
     public class Stat

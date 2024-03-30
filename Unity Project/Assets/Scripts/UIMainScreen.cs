@@ -1,5 +1,5 @@
 using System;
-using Plguins.iOS.TrackingUsage;
+using Plugins.iOS.TrackingUsage;
 using TMPro;
 using UnityEngine;
 
