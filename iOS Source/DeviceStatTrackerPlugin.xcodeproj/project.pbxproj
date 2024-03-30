@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A8656302BB86B5700109F40 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A86562F2BB86B5700109F40 /* Utils.swift */; };
 		5AAD09762BB54CD900F954D3 /* DeviceStatTrackerPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AAD09752BB54CD900F954D3 /* DeviceStatTrackerPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5AAD097D2BB54D2700F954D3 /* DeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD097C2BB54D2700F954D3 /* DeviceMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A86562F2BB86B5700109F40 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5AAD09722BB54CD900F954D3 /* DeviceStatTrackerPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DeviceStatTrackerPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AAD09752BB54CD900F954D3 /* DeviceStatTrackerPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceStatTrackerPlugin.h; sourceTree = "<group>"; };
 		5AAD097C2BB54D2700F954D3 /* DeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMonitor.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			children = (
 				5AAD09752BB54CD900F954D3 /* DeviceStatTrackerPlugin.h */,
 				5AAD097C2BB54D2700F954D3 /* DeviceMonitor.swift */,
+				5A86562F2BB86B5700109F40 /* Utils.swift */,
 			);
 			path = DeviceStatTrackerPlugin;
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AAD097D2BB54D2700F954D3 /* DeviceMonitor.swift in Sources */,
+				5A8656302BB86B5700109F40 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
