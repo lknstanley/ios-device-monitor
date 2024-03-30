@@ -60,7 +60,7 @@ public class DeviceMonitor {
                 "active": ramUsage.active,
                 "inactive": ramUsage.inactive,
                 "wired": ramUsage.wired,
-                "comopressed": ramUsage.comopressed
+                "compressed": ramUsage.compressed
             ]
         ]
         
@@ -71,7 +71,7 @@ public class DeviceMonitor {
         var size     = HOST_CPU_LOAD_INFO_COUNT
         let hostInfo = host_cpu_load_info_t.allocate(capacity: 1)
         
-        let result = hostInfo.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
+        _ = hostInfo.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
             host_statistics(machHost, HOST_CPU_LOAD_INFO,
                             $0,
                             &size)
@@ -138,7 +138,7 @@ public class DeviceMonitor {
         active: Double,
         inactive: Double,
         wired: Double,
-        comopressed: Double) {
+        compressed: Double) {
             let stats = VMStatistics64()
             
             let free     = Utils.convertByte(
