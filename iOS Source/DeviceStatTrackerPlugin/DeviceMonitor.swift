@@ -26,20 +26,17 @@ UInt32(MemoryLayout<processor_set_load_info_data_t>.size / MemoryLayout<natural_
 public class DeviceMonitor {
     public static let instance = DeviceMonitor()
     private var framesRendered = 0
-    private var startTime: CFTimeInterval = 0
     let machHost = mach_host_self()
     var loadPrevious = host_cpu_load_info()
     let mtlDevice: MTLDevice? = MTLCreateSystemDefaultDevice()
     let PAGE_SIZE = vm_kernel_page_size
     
-    // Function to start tracking device stats
     func startTracking() {
-        startTime = CACurrentMediaTime()
         print("========== Start Tracking on Native Side ==========")
     }
     
-    // Function to stop tracking device stats
     func stopTracking() -> String {
+        // Build tracked data
         print("========== Stop Tracking on Native Side ==========")
         let cpuUsage = cpuUsage()
         let gpuUsage = gpuUsage()
@@ -70,44 +67,31 @@ public class DeviceMonitor {
     func hostCPULoadInfo() -> host_cpu_load_info {
         var size     = HOST_CPU_LOAD_INFO_COUNT
         let hostInfo = host_cpu_load_info_t.allocate(capacity: 1)
-        
         _ = hostInfo.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
             host_statistics(machHost, HOST_CPU_LOAD_INFO,
                             $0,
                             &size)
         }
-        
         let data = hostInfo.move()
         hostInfo.deallocate()
-        
         return data
     }
     
     func VMStatistics64() -> vm_statistics64 {
             var size     = HOST_VM_INFO64_COUNT
             let hostInfo = vm_statistics64_t.allocate(capacity: 1)
-            
             let result = hostInfo.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
                 host_statistics64(machHost,
                                   HOST_VM_INFO64,
                                   $0,
                                   &size)
             }
-
             let data = hostInfo.move()
             hostInfo.deallocate()
-            
-            #if DEBUG
-                if result != KERN_SUCCESS {
-                    print("ERROR - \(#file):\(#function) - kern_result_t = "
-                        + "\(result)")
-                }
-            #endif
-            
             return data
         }
     
-    // Function to get CPU usage
+    // Get CPU usage by host_cpu_load_info_t
     private func cpuUsage() -> (
         system: Double,
         user: Double,
@@ -132,7 +116,7 @@ public class DeviceMonitor {
             return (sys, user, idle, nice)
         }
     
-    // Function to get RAM usage
+    // Get RAM usage
     private func ramUsage() -> (
         free: Double,
         active: Double,
@@ -162,7 +146,7 @@ public class DeviceMonitor {
             return (free, active, inactive, wired, compressed)
         }
     
-    // Function to get GPU usage (estimated using Metal)
+    // Get the GPU usage by Metal API
     private func gpuUsage() -> (max: UInt64, curr: Int) {
         let maxGPUMem = mtlDevice?.recommendedMaxWorkingSetSize
         let currAllocatedGPUMem = mtlDevice?.currentAllocatedSize
@@ -172,6 +156,7 @@ public class DeviceMonitor {
 }
 
 
+// Expose to Unity
 @_cdecl("startTracking")
 public func startTracking() {
     DeviceMonitor.instance.startTracking()

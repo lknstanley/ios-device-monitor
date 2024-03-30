@@ -36,7 +36,7 @@ class Utils {
         }
     }
     
-    // Convert byte value to certain value
+    // Convert byte in double value to certain unit
     public static func convertByte(value: Double, target: UnitType) -> Double {
         switch(target) {
         case .Byte:
@@ -49,6 +49,8 @@ class Utils {
             return value / 1024 / 1024 / 1024
         }
     }
+    
+    // Convert byte in UInt64 value to certain unit
     public static func convertByte(value: UInt64, target: UnitType) -> UInt64 {
         switch(target) {
         case .Byte:
@@ -61,6 +63,8 @@ class Utils {
             return value / 1024 / 1024 / 1024
         }
     }
+    
+    // Convert byte in Int value to certain unit
     public static func convertByte(value: Int, target: UnitType) -> Int {
         switch(target) {
         case .Byte:
