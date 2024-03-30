@@ -1,12 +1,48 @@
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Plguins.iOS.TrackingUsage
 {
+    [ Serializable ]
+    public class Stat
+    {
+        public CPUUsage cpuUsage;
+        [ FormerlySerializedAs( "memoryUsage" ) ]
+        public RamUsage ramUsage;
+        public GPUUsage gpuUsage;
+    }
+
+    [ Serializable ]
+    public class CPUUsage
+    {
+        public float idle;
+        public float nice;
+        public float system;
+        public float user;
+    }
+    
+    [ Serializable ]
+    public class RamUsage
+    {
+        public float active;
+        public float wired;
+        public float compressed;
+        public float free;
+        public float inactive;
+    }
+    
+    [ Serializable ]
+    public class GPUUsage
+    {
+        public float allocated;
+        public float max;
+    }
+    
     public class DeviceTracker : MonoBehaviour
     {
-        // Singleton
+        #region Singleton
         private static DeviceTracker _instance;
         public static DeviceTracker Instance
         {
@@ -23,25 +59,33 @@ namespace Plguins.iOS.TrackingUsage
                 return _instance;
             }
         }
+        #endregion
         
         #if UNITY_IOS
-        
         
         [DllImport("__Internal")]
         private static extern void startTracking();
 
         [DllImport("__Internal")]
         private static extern string stopTracking(); // Return type is changed to IntPtr
+
+        private bool isTracking = false;
         
-        public void StartTracking()
+        public bool StartTracking()
         {
+            if ( isTracking ) return false;
             startTracking();
+            isTracking = !isTracking;
+            return true;
         }
         
-        public void StopTracking()
+        public Stat StopTracking()
         {
+            if ( !isTracking ) return null;
             string rtn = stopTracking();
             Debug.Log( rtn );
+            isTracking = !isTracking;
+            return JsonUtility.FromJson< Stat >( rtn );
         }
         
         #endif
