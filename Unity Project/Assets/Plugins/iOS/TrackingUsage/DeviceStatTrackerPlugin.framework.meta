@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c8077583a53724d8ea6dd00cb4c743da
+guid: 1e7036bfaa5f64dcd954b0ee3d340f99
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -27,7 +27,7 @@ PluginImporter:
     second:
       enabled: 1
       settings:
-        AddToEmbeddedBinaries: false
+        AddToEmbeddedBinaries: true
   userData: 
   assetBundleName: 
   assetBundleVariant: 

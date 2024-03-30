@@ -31,7 +31,7 @@ namespace Plguins.iOS.TrackingUsage
         private static extern void startTracking();
 
         [DllImport("__Internal")]
-        private static extern IntPtr stopTracking(); // Return type is changed to IntPtr
+        private static extern string stopTracking(); // Return type is changed to IntPtr
         
         public void StartTracking()
         {
@@ -40,9 +40,8 @@ namespace Plguins.iOS.TrackingUsage
         
         public void StopTracking()
         {
-            IntPtr jsonStringPtr = stopTracking();
-            string jsonString = Marshal.PtrToStringAuto(jsonStringPtr);
-            Debug.Log( jsonString );
+            string rtn = stopTracking();
+            Debug.Log( rtn );
         }
         
         #endif

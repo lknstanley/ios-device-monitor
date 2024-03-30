@@ -1,0 +1,11 @@
+framework module DeviceStatTrackerPlugin {
+  umbrella header "DeviceStatTrackerPlugin.h"
+  export *
+
+  module * { export * }
+}
+
+module DeviceStatTrackerPlugin.Swift {
+  header "DeviceStatTrackerPlugin-Swift.h"
+  requires objc
+}
