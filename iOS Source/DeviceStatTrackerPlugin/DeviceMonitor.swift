@@ -10,13 +10,13 @@ import UIKit
 import Metal
 
 
-public class DeviceMonitor: NSObject {
+public class DeviceMonitor {
     public static let instance = DeviceMonitor()
     public func startTracking() {
         print("========== Start Tracking ==========")
     }
     
-    public func stopTracking() -> NSString {
+    public func stopTracking() -> String {
         print("========== Stop Tracking ==========")
         return "Tracking is stopped"
     }
@@ -29,6 +29,9 @@ public func startTracking() {
 }
 
 @_cdecl("stopTracking")
-public func stopTracking() -> NSString {
-    return DeviceMonitor.instance.stopTracking()
+public func stopTracking() -> UnsafeMutablePointer<CChar> {
+    let nativeStr = DeviceMonitor.instance.stopTracking()
+    let resNsStrPtr: UnsafePointer<CChar> = (nativeStr as NSString).utf8String!
+    let resNsStrPtrDup: UnsafeMutablePointer<CChar> = strdup(resNsStrPtr)
+    return resNsStrPtrDup
 }
