@@ -49,6 +49,6 @@ To make this library, I have studied the following repositories, examples and do
 
 # Demo Video
 
-<img src="https://i.imgur.com/wZzyMMA.gif" width="400">
-
 Recorded on iPhone 13 Pro
+
+<img src="https://i.imgur.com/wZzyMMA.gif" width="300">
