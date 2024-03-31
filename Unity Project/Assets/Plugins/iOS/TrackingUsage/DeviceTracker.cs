@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using AOT;
 using UnityEngine;
 
 namespace Plugins.iOS.TrackingUsage
@@ -27,31 +28,44 @@ namespace Plugins.iOS.TrackingUsage
         
         #if UNITY_IOS
         
-        [DllImport("__Internal")]
-        private static extern void startTracking();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void Native_OnStatReceived([MarshalAs(UnmanagedType.LPStr), In] string stat );
+
+        [ DllImport( "__Internal" ) ]
+        private static extern void startTracking(
+            [ MarshalAs( UnmanagedType.FunctionPtr ) ] Native_OnStatReceived onStatReceived );
+        
+        [MonoPInvokeCallback(typeof(Native_OnStatReceived))]
+        private static void BrdigeToNative_OnStatReceived(string message)
+        {
+            Instance.Bridge_OnStatReceived(JsonUtility.FromJson<Stat>( message ));
+        }
+        
+        public Action<Stat> Bridge_OnStatReceived;
 
         [DllImport("__Internal")]
-        private static extern string stopTracking(); // Return type is changed to IntPtr
+        private static extern void stopTracking(); // Return type is changed to IntPtr
 
         private bool isTracking = false;
         
-        public bool StartTracking()
+        public bool StartTracking(Action<Stat> onStatReceived)
         {
             if ( isTracking ) return false;
-            startTracking();
+            startTracking(BrdigeToNative_OnStatReceived);
+            Bridge_OnStatReceived += onStatReceived;
             isTracking = !isTracking;
             return true;
         }
         
-        public Stat StopTracking()
+        public void StopTracking()
         {
-            if ( !isTracking ) return null;
-            string rtn = stopTracking();
-            Debug.Log( rtn );
+            if ( !isTracking ) return;
+            Bridge_OnStatReceived = null;
             isTracking = !isTracking;
-            return JsonUtility.FromJson< Stat >( rtn );
         }
-        
-        #endif
+
+        public bool IsNowTracking() => !isTracking;
+
+#endif
     }
 }
