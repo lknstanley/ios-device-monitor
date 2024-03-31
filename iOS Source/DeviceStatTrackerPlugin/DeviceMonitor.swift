@@ -10,6 +10,7 @@ import UIKit
 import Metal
 
 
+// Host Info Constants
 private let HOST_BASIC_INFO_COUNT         : mach_msg_type_number_t =
 UInt32(MemoryLayout<host_basic_info_data_t>.size / MemoryLayout<integer_t>.size)
 private let HOST_LOAD_INFO_COUNT          : mach_msg_type_number_t =
@@ -23,6 +24,9 @@ UInt32(MemoryLayout<host_sched_info_data_t>.size / MemoryLayout<integer_t>.size)
 private let PROCESSOR_SET_LOAD_INFO_COUNT : mach_msg_type_number_t =
 UInt32(MemoryLayout<processor_set_load_info_data_t>.size / MemoryLayout<natural_t>.size)
 
+// Declare the delegate
+public typealias onUpdateStatHandler = @convention(c) (UnsafeMutablePointer<CChar>) -> Void
+
 public class DeviceMonitor {
     public static let instance = DeviceMonitor()
     private var framesRendered = 0
@@ -30,14 +34,18 @@ public class DeviceMonitor {
     var loadPrevious = host_cpu_load_info()
     let mtlDevice: MTLDevice? = MTLCreateSystemDefaultDevice()
     let PAGE_SIZE = vm_kernel_page_size
+    var callback: onUpdateStatHandler?
+    var timer: Timer?
     
-    func startTracking() {
+    init() {}
+    
+    func startTracking(handler: onUpdateStatHandler) {
         print("========== Start Tracking on Native Side ==========")
+        self.callback = handler
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(doTracking), userInfo: nil, repeats: true)
     }
     
-    func stopTracking() -> String {
-        // Build tracked data
-        print("========== Stop Tracking on Native Side ==========")
+    @objc func doTracking() {
         let cpuUsage = cpuUsage()
         let gpuUsage = gpuUsage()
         let ramUsage = ramUsage()
@@ -61,7 +69,16 @@ public class DeviceMonitor {
             ]
         ]
         
-        return Utils.convertDictionaryToJsonString(dictionary: trackedData)
+        // Call handler and send data to Unity
+        callback?(
+            Utils.convertStringToCSString(
+                text: Utils.convertDictionaryToJsonString(dictionary: trackedData)
+            )
+        )
+    }
+    
+    func stopTracking() -> Void {
+        timer?.invalidate()
     }
     
     func hostCPULoadInfo() -> host_cpu_load_info {
@@ -158,11 +175,11 @@ public class DeviceMonitor {
 
 // Expose to Unity
 @_cdecl("startTracking")
-public func startTracking() {
-    DeviceMonitor.instance.startTracking()
+public func startTracking(handler: onUpdateStatHandler) -> Void{
+    DeviceMonitor.instance.startTracking(handler: handler)
 }
 
 @_cdecl("stopTracking")
-public func stopTracking() -> UnsafeMutablePointer<CChar> {
-    return Utils.convertStringToCSString(text: DeviceMonitor.instance.stopTracking())
+public func stopTracking() -> Void {
+    DeviceMonitor.instance.stopTracking()
 }
