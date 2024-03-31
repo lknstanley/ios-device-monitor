@@ -1,45 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Plugins.iOS.TrackingUsage
 {
-    [ Serializable ]
-    public class Stat
-    {
-        public CPUUsage cpuUsage;
-        [ FormerlySerializedAs( "memoryUsage" ) ]
-        public RamUsage ramUsage;
-        public GPUUsage gpuUsage;
-    }
-
-    [ Serializable ]
-    public class CPUUsage
-    {
-        public float idle;
-        public float nice;
-        public float system;
-        public float user;
-    }
-    
-    [ Serializable ]
-    public class RamUsage
-    {
-        public float active;
-        public float wired;
-        public float compressed;
-        public float free;
-        public float inactive;
-    }
-    
-    [ Serializable ]
-    public class GPUUsage
-    {
-        public float allocated;
-        public float max;
-    }
-    
     public class DeviceTracker : MonoBehaviour
     {
         #region Singleton
