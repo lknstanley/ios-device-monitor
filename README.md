@@ -41,3 +41,4 @@ To make this library I have studied the following repositories, examples and doc
    - Delegate setup between Unity and iOS native plugin with Swift
 3. [Metal API Documentation - MLTDevice](https://developer.apple.com/documentation/metal/mtldevice)
    - After the understanding of making swift library for Unity, I found this Metal API documentation and able to use it for implementing the logic for getting GPU information.
+4. [Interval in Swift](https://stackoverflow.com/a/40148293)
