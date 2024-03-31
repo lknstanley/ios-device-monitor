@@ -60,6 +60,7 @@ namespace Plugins.iOS.TrackingUsage
         public void StopTracking()
         {
             if ( !isTracking ) return;
+            stopTracking();
             Bridge_OnStatReceived = null;
             isTracking = !isTracking;
         }
