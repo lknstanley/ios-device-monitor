@@ -41,8 +41,8 @@ To make this library, I have studied the following repositories, examples and do
    - Delegate setup between Unity and iOS native plugin with Swift
 3. [Metal API Documentation - MLTDevice](https://developer.apple.com/documentation/metal/mtldevice)
    - After understanding how to make a swift library for Unity, I found this Metal API documentation and was able to use it to implement the logic for getting GPU information.
-   - [currentAllocatedSize](https://developer.apple.com/documentation/metal/mtldevice/2915745-currentallocatedsize)
-   - [recommendedMaxWorkingSetSize](https://developer.apple.com/documentation/metal/mtldevice/2369280-recommendedmaxworkingsetsize)
+   - [currentAllocatedSize](https://developer.apple.com/documentation/metal/mtldevice/2915745-currentallocatedsize) - The total amount of memory, in bytes, the GPU device is using for all of its resources.
+   - [recommendedMaxWorkingSetSize](https://developer.apple.com/documentation/metal/mtldevice/2369280-recommendedmaxworkingsetsize) - An approximation of how much memory, in bytes, this GPU device can allocate without affecting its runtime performance.
 4. [Interval in Swift](https://stackoverflow.com/a/40148293)
 
 # Demo Video
