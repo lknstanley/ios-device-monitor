@@ -45,4 +45,4 @@ To make this library, I have studied the following repositories, examples and do
 
 # Demo Video
 
-<img src="https://i.imgur.com/fiTHo60.gif" width="100">
+<img src="https://i.imgur.com/fiTHo60.gif" width="400">
