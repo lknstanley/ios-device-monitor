@@ -45,6 +45,10 @@ public class DeviceMonitor {
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(doTracking), userInfo: nil, repeats: true)
     }
     
+    func startTracking() {
+        print("========== Start Tracking on Native Side ==========")
+    }
+    
     @objc func doTracking() {
         let cpuUsage = cpuUsage()
         let gpuUsage = gpuUsage()
@@ -77,10 +81,37 @@ public class DeviceMonitor {
         )
     }
     
-    func stopTracking() -> Void {
+    func stopTrackingWithInterval() -> Void {
         self.timer?.invalidate()
         self.timer = nil
         self.callback = nil
+    }
+    
+    func stopTracking() -> String {
+        let cpuUsage = cpuUsage()
+        let gpuUsage = gpuUsage()
+        let ramUsage = ramUsage()
+        let trackedData: [String: Any] = [
+            "cpuUsage": [
+                "system": cpuUsage.system,
+                "user": cpuUsage.user,
+                "idle": cpuUsage.idle,
+                "nice": cpuUsage.nice
+            ],
+            "gpuUsage": [
+                "max": gpuUsage.max,
+                "allocated": gpuUsage.curr
+            ],
+            "ramUsage": [
+                "free": ramUsage.free,
+                "active": ramUsage.active,
+                "inactive": ramUsage.inactive,
+                "wired": ramUsage.wired,
+                "compressed": ramUsage.compressed
+            ]
+        ]
+        
+        return Utils.convertDictionaryToJsonString(dictionary: trackedData)
     }
     
     func hostCPULoadInfo() -> host_cpu_load_info {
@@ -176,12 +207,22 @@ public class DeviceMonitor {
 
 
 // Expose to Unity
-@_cdecl("startTracking")
-public func startTracking(handler: onUpdateStatHandler) -> Void{
+@_cdecl("startTrackingWithInterval")
+public func startTrackingWithInterval(handler: onUpdateStatHandler) -> Void {
     DeviceMonitor.instance.startTracking(handler: handler)
 }
 
+@_cdecl("stopTrackingWithInterval")
+public func stopTrackingWithInterval() -> Void {
+    DeviceMonitor.instance.stopTrackingWithInterval()
+}
+
+@_cdecl("startTracking")
+public func startTracking() -> Void {
+    DeviceMonitor.instance.startTracking()
+}
+
 @_cdecl("stopTracking")
-public func stopTracking() -> Void {
-    DeviceMonitor.instance.stopTracking()
+public func stopTracking() -> UnsafeMutablePointer<CChar> {
+    return Utils.convertStringToCSString(text: DeviceMonitor.instance.stopTracking())
 }
