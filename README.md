@@ -2,7 +2,7 @@
 
 This plugin with Swift supports Unity in reading CPU, RAM, and GPU usage on iOS devices.
 This repository includes a demo Unity project to showcase how to access it.
-The demo Unity Project demonstrate two modes of tracking device performance: single mode and interval mode.
+The demo Unity Project demonstrate two modes of tracking device performance: [single mode](https://github.com/lknstanley/ios-device-monitor?tab=readme-ov-file#single-mode) and [interval mode](https://github.com/lknstanley/ios-device-monitor?tab=readme-ov-file#interval-mode).
 
 # Development Environment
 
