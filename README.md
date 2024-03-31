@@ -38,5 +38,6 @@ To make this library I have studied the following repositories, examples and doc
    - Understand how to access the CPU and RAM usage from Swift
 2. [UnityPluginXcodeTemplate](https://github.com/fuziki/UnityPluginXcodeTemplate)
    - Data transitition and format between Unity and native code
+   - Delegate setup between Unity and iOS native plugin with Swift
 3. [Metal API Documentation - MLTDevice](https://developer.apple.com/documentation/metal/mtldevice)
    - After the understanding of making swift library for Unity, I found this Metal API documentation and able to use it for implementing the logic for getting GPU information.
