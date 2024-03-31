@@ -26,6 +26,8 @@ PS2: If you don't have access right, try running `chmod +x build.sh`
 
 ## 2. (Optional) Test with the demo Unity Project on iOS devices
 
+Since the Unity Project is already integrated with the stable library, this instruction can be ignored if nothing changes on the swift code.
+
 1. Copy `DeviceStatTrackerPlugin.framework` from `iOS Source/Products` to `Unity Project/Assets/Plugins/iOS/TrackingUsage`
 2. Open Unity Project and make sure it is on iOS platform
 3. Build the project and run it on XCode
