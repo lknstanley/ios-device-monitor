@@ -2,6 +2,7 @@
 
 This plugin with Swift supports Unity in reading CPU, RAM, and GPU usage on iOS devices.
 This repository includes a demo Unity project to showcase how to access it.
+The demo Unity Project demonstrate two modes of tracking device performance: single mode and interval mode.
 
 # Development Environment
 
@@ -31,6 +32,18 @@ Since the Unity Project is already integrated with the stable library, this inst
 1. Copy `DeviceStatTrackerPlugin.framework` from `iOS Source/Products` to `Unity Project/Assets/Plugins/iOS/TrackingUsage`
 2. Open Unity Project and make sure it is on iOS platform
 3. Build the project and run it on XCode
+
+# Tracking Mode
+
+### Single Mode
+
+When you use this mode to do tracking, no data will be received until you call to stop tracking.
+All tracking data will be received from the Stop Tracking function.
+
+### Interval Mode
+
+When you use this mode, you need to pass a handler to the plugin, and then you can receive data per second during tracking.
+No tracking data will be returned when you call the stop tracking function.
 
 # References and Credits
 
