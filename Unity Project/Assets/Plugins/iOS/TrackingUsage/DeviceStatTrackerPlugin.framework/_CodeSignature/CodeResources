@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/DeviceStatTrackerPlugin-Swift.h</key>
 		<data>
-		p6DNcjsAcdouXkqfWORgD3fGX5I=
+		BllE679RBZ4PB3yoE8SsWpGPcQY=
 		</data>
 		<key>Headers/DeviceStatTrackerPlugin.h</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Modules/DeviceStatTrackerPlugin.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		pY0Yi0g1ygIyUjNywKicec1yCdI=
+		solE1tGQwfKNX+UfJOQ0pbZkdsw=
 		</data>
 		<key>Modules/DeviceStatTrackerPlugin.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Modules/DeviceStatTrackerPlugin.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		ZACz5ppAgy4RkpHxLs1egHGurf8=
+		NYgrK7KnrfaA1l5LBW5z00ghYb8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -43,7 +43,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ejWNgPQ1xbYpp3kxPj9zWRBZYT69OG8Rjt05uu8Bneo=
+			G4pM0xIaHSOkaniQZMzLSvfymVH0qh8/JVK+ri/I9+k=
 			</data>
 		</dict>
 		<key>Headers/DeviceStatTrackerPlugin.h</key>
@@ -57,7 +57,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			hnLMWd7toX/jPGmhbqEqOQ0P1rIxyWlTXTGtmQ6MdRw=
+			dYOcwgTiVa3pCUhqCNFpB52TxhsZ3Jvq+g4kUD2AOZg=
 			</data>
 		</dict>
 		<key>Modules/DeviceStatTrackerPlugin.swiftmodule/arm64-apple-ios.abi.json</key>
@@ -78,7 +78,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pcz4/WOBqLSGeJkgdJkM8MHAvB5PxsLNYdpPlk7G2pw=
+			T31/SuU45LrxR6t9rxk1T4uXQUS4NG8nkL6rP5TRoPk=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -298,10 +298,16 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-SWIFT_EXTERN void startTracking(void (* _Nonnull handler)(char * _Nonnull));
+SWIFT_EXTERN void startTracking(void);
 
 
-SWIFT_EXTERN void stopTracking(void);
+SWIFT_EXTERN void startTrackingWithInterval(void (* _Nonnull handler)(char * _Nonnull));
+
+
+SWIFT_EXTERN char * _Nonnull stopTracking(void) SWIFT_WARN_UNUSED_RESULT;
+
+
+SWIFT_EXTERN void stopTrackingWithInterval(void);
 
 #endif
 #if __has_attribute(external_source_symbol)
