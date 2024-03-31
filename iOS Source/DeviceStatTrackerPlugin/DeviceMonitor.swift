@@ -78,7 +78,9 @@ public class DeviceMonitor {
     }
     
     func stopTracking() -> Void {
-        timer?.invalidate()
+        self.timer?.invalidate()
+        self.timer = nil
+        self.callback = nil
     }
     
     func hostCPULoadInfo() -> host_cpu_load_info {
