@@ -79,13 +79,13 @@ public class UIMainScreen : MonoBehaviour
             // - Set the maximum value of the sliders
             cpuSystemSlider.maxValue = cpuUserSlider.maxValue = cpuIdleSlider.maxValue = cpuNiceSlider.maxValue = 100;
             // - Mapping data to the UI
-            cpuSystemLbl.text = String.Format( FormatStatStr, "System: ", $"{stat.cpuUsage.system:0.00}%" );
+            cpuSystemLbl.text = String.Format( FormatStatStr, "System", $"{stat.cpuUsage.system:0.00}%" );
             cpuSystemSlider.value = stat.cpuUsage.system;
-            cpuUserLbl.text = String.Format( FormatStatStr, "User: ", $"{stat.cpuUsage.user:0.00}%" );
+            cpuUserLbl.text = String.Format( FormatStatStr, "User", $"{stat.cpuUsage.user:0.00}%" );
             cpuUserSlider.value = stat.cpuUsage.user;
-            cpuIdleLbl.text = String.Format( FormatStatStr, "Idle: ", $"{stat.cpuUsage.idle:0.00}%" );
+            cpuIdleLbl.text = String.Format( FormatStatStr, "Idle", $"{stat.cpuUsage.idle:0.00}%" );
             cpuIdleSlider.value = stat.cpuUsage.idle;
-            cpuNiceLbl.text = String.Format( FormatStatStr, "Nice: ", $"{stat.cpuUsage.nice:0.00}%" );
+            cpuNiceLbl.text = String.Format( FormatStatStr, "Nice", $"{stat.cpuUsage.nice:0.00}%" );
             cpuNiceSlider.value = stat.cpuUsage.nice;
             
             // RAM Usage
@@ -93,22 +93,22 @@ public class UIMainScreen : MonoBehaviour
             float maxRam = stat.ramUsage.active + stat.ramUsage.wired + stat.ramUsage.compressed + stat.ramUsage.free + stat.ramUsage.inactive;
             ramFreeSlider.maxValue = ramWiredSlider.maxValue = ramActiveSlider.maxValue = ramInactiveSlider.maxValue = ramCompressedSlider.maxValue = maxRam;
             // - Mapping data to the UI
-            ramFreeLbl.text = String.Format( FormatStatStr, "Free: ", $"{stat.ramUsage.free:0.00}GB" );
+            ramFreeLbl.text = String.Format( FormatStatStr, "Free", $"{stat.ramUsage.free:0.00}GB" );
             ramFreeSlider.value = stat.ramUsage.free;
-            ramWiredLbl.text = String.Format( FormatStatStr, "Wired: ", $"{stat.ramUsage.wired:0.00}GB" );
+            ramWiredLbl.text = String.Format( FormatStatStr, "Wired", $"{stat.ramUsage.wired:0.00}GB" );
             ramWiredSlider.value = stat.ramUsage.wired;
-            ramActiveLbl.text = String.Format( FormatStatStr, "Active: ", $"{stat.ramUsage.active:0.00}GB" );
+            ramActiveLbl.text = String.Format( FormatStatStr, "Active", $"{stat.ramUsage.active:0.00}GB" );
             ramActiveSlider.value = stat.ramUsage.active;
-            ramInactiveLbl.text = String.Format( FormatStatStr, "Inactive: ", $"{stat.ramUsage.inactive:0.00}GB" );
+            ramInactiveLbl.text = String.Format( FormatStatStr, "Inactive", $"{stat.ramUsage.inactive:0.00}GB" );
             ramInactiveSlider.value = stat.ramUsage.inactive;
-            ramCompressedLbl.text = String.Format( FormatStatStr, "Compressed: ", $"{stat.ramUsage.compressed:0.00}GB" );
+            ramCompressedLbl.text = String.Format( FormatStatStr, "Compressed", $"{stat.ramUsage.compressed:0.00}GB" );
             ramCompressedSlider.value = stat.ramUsage.compressed;
             
             // GPU Usage
             // - Set the maximum GPU value
             gpuAllocatedSlider.maxValue = stat.gpuUsage.max;
             // - Mapping data to the UI
-            gpuAllocatedLbl.text = String.Format( FormatStatStr, "Used: ", $"{stat.gpuUsage.allocated:0.00}MB / Max: {stat.gpuUsage.max}MB" );
+            gpuAllocatedLbl.text = String.Format( FormatStatStr, "Used", $"{stat.gpuUsage.allocated:0.00}MB / Max: {stat.gpuUsage.max}MB" );
             gpuAllocatedSlider.value = stat.gpuUsage.allocated;
         }
     }
