@@ -1,18 +1,20 @@
 using System;
 using Plugins.iOS.TrackingUsage;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIMainScreen : MonoBehaviour
 {
     private const string FormatStatStr = "{0}: {1}";
+    
+    private bool _isIntervalMode = false;
 
     [Header("Reference")]
-    public GameObject statContainer;
     public Button startTrackingBtn;
     public Button stopTrackingBtn;
+    public Button modeToggleBtn;
+    public TextMeshProUGUI modeLbl;
     
     [ Header( "CPU Usage UI" ) ]
     public TextMeshProUGUI cpuSystemLbl;
@@ -48,30 +50,53 @@ public class UIMainScreen : MonoBehaviour
     void UpdateUIState()
     {
         // Hide the dashboard at the beginning
-        statContainer.SetActive( !DeviceTracker.Instance.IsNowTracking() );
-        startTrackingBtn.interactable = DeviceTracker.Instance.IsNowTracking();
-        stopTrackingBtn.interactable = !DeviceTracker.Instance.IsNowTracking();
+        startTrackingBtn.interactable = !DeviceTracker.Instance.IsNowTracking();
+        stopTrackingBtn.interactable = DeviceTracker.Instance.IsNowTracking();
+        modeToggleBtn.interactable = !DeviceTracker.Instance.IsNowTracking();
     }
     
     #region Event Handlers
 
+    public void OnModeToggleClicked()
+    {
+        _isIntervalMode = !_isIntervalMode;
+        modeLbl.text = _isIntervalMode ? "Mode: Interval Mode" : "Mode: Single Mode";
+    }
+    
     public void OnStartTrackingClicked()
     {
-        if ( DeviceTracker.Instance.StartTracking(OnStatReceived) )
+        if ( _isIntervalMode )
         {
-            statContainer.SetActive( true );
-            UpdateUIState();
+            if ( DeviceTracker.Instance.StartTrackingWithInterval(OnStatReceived) )
+            {
+                UpdateUIState();
+            }
+        }
+        else
+        {
+            if ( DeviceTracker.Instance.StartTracking() )
+            {
+                UpdateUIState();
+            }
         }
     }
 
     public void OnStopTrackingClicked()
     {
-        DeviceTracker.Instance.StopTracking();
-        statContainer.SetActive( false );
-        UpdateUIState();
+        if ( _isIntervalMode )
+        {
+            DeviceTracker.Instance.StopTrackingWithInterval();
+            UpdateUIState();
+        }
+        else
+        {
+            var stat = DeviceTracker.Instance.StopTracking();
+            UpdateUIState();
+            OnStatReceived( stat );
+        }
     }
 
-    public void OnStatReceived(Stat stat)
+    public void OnStatReceived( Stat stat )
     {
         if ( stat != null )
         {
@@ -87,11 +112,13 @@ public class UIMainScreen : MonoBehaviour
             cpuIdleSlider.value = stat.cpuUsage.idle;
             cpuNiceLbl.text = String.Format( FormatStatStr, "Nice", $"{stat.cpuUsage.nice:0.00}%" );
             cpuNiceSlider.value = stat.cpuUsage.nice;
-            
+
             // RAM Usage
             // - Set the maximum RAM value by summing all the RAM values
-            float maxRam = stat.ramUsage.active + stat.ramUsage.wired + stat.ramUsage.compressed + stat.ramUsage.free + stat.ramUsage.inactive;
-            ramFreeSlider.maxValue = ramWiredSlider.maxValue = ramActiveSlider.maxValue = ramInactiveSlider.maxValue = ramCompressedSlider.maxValue = maxRam;
+            float maxRam = stat.ramUsage.active + stat.ramUsage.wired + stat.ramUsage.compressed + stat.ramUsage.free +
+                           stat.ramUsage.inactive;
+            ramFreeSlider.maxValue = ramWiredSlider.maxValue = ramActiveSlider.maxValue =
+                ramInactiveSlider.maxValue = ramCompressedSlider.maxValue = maxRam;
             // - Mapping data to the UI
             ramFreeLbl.text = String.Format( FormatStatStr, "Free", $"{stat.ramUsage.free:0.00}GB" );
             ramFreeSlider.value = stat.ramUsage.free;
@@ -103,12 +130,13 @@ public class UIMainScreen : MonoBehaviour
             ramInactiveSlider.value = stat.ramUsage.inactive;
             ramCompressedLbl.text = String.Format( FormatStatStr, "Compressed", $"{stat.ramUsage.compressed:0.00}GB" );
             ramCompressedSlider.value = stat.ramUsage.compressed;
-            
+
             // GPU Usage
             // - Set the maximum GPU value
             gpuAllocatedSlider.maxValue = stat.gpuUsage.max;
             // - Mapping data to the UI
-            gpuAllocatedLbl.text = String.Format( FormatStatStr, "Used", $"{stat.gpuUsage.allocated:0.00}MB / Max: {stat.gpuUsage.max}MB" );
+            gpuAllocatedLbl.text = String.Format( FormatStatStr, "Used",
+                $"{stat.gpuUsage.allocated:0.00}MB / Max: {stat.gpuUsage.max}MB" );
             gpuAllocatedSlider.value = stat.gpuUsage.allocated;
         }
     }
