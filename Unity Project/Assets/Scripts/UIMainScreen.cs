@@ -108,7 +108,7 @@ public class UIMainScreen : MonoBehaviour
             // - Set the maximum GPU value
             gpuAllocatedSlider.maxValue = stat.gpuUsage.max;
             // - Mapping data to the UI
-            gpuAllocatedLbl.text = String.Format( FormatStatStr, "Allocated: ", $"{stat.gpuUsage.allocated:0.00}MB" );
+            gpuAllocatedLbl.text = String.Format( FormatStatStr, "Used: ", $"{stat.gpuUsage.allocated:0.00}MB / Max: {stat.gpuUsage.max}MB" );
             gpuAllocatedSlider.value = stat.gpuUsage.allocated;
         }
     }
